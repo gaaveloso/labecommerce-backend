@@ -1,0 +1,26 @@
+{
+  "name": "labecommerce-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "clear && node index.js",
+    "parOuImpar": "clear && node par-ou-impar.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaaveloso/labecommerce-backend.git"
+  },
+  "author": "Gabriel Veloso",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaaveloso/labecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/gaaveloso/labecommerce-backend#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  }
+}
