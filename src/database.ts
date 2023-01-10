@@ -76,7 +76,7 @@ export const getProductById = (idToSearch: string): Array<TProduct> => {
 
 export const getProductsByName = (q : string): Array<TProduct> => {
   return products.filter((product) => {
-    return product.name.includes(q)
+    return product.name.toLowerCase().includes(q.toLowerCase())
   })
 }
 
@@ -101,6 +101,10 @@ export const purchases: TPurchase[] = [
     totalPrice: sumPrice(2, 120),
   },
 ];
+
+export const getAllPurchases = () => {
+  return purchases
+}
 
 export const createPurchase = (userId: string, productId: string, quantity: number, totalPrice: number) : void => {
   const newPurchase: TPurchase[] = [{
