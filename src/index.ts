@@ -1,7 +1,7 @@
 import { users, products, purchases, getAllUsers, getAllProducts, getProductsByName, createUser, getAllPurchases } from "./database";
 import express, { Request, Response } from 'express'
 import cors from 'cors'
-import { TProduct, TPurchase, TUser } from "./types";
+import { TProduct, TPurchase, TUser, Department } from "./types";
 
 // console.table(users)
 // console.table(products)
@@ -21,15 +21,15 @@ app.get('/ping', (req: Request, res: Response) => {
 })
 
 app.get('/users', (req: Request, res: Response) => {
-    res.status(200).send(getAllUsers())
+    res.status(200).send(users)
 })
 
 app.get('/products', (req: Request, res: Response) => {
-    res.status(200).send(getAllProducts())
+    res.status(200).send(products)
 })
 
 app.get('/purchases', (req: Request, res: Response) => {
-    res.status(200).send(getAllPurchases())
+    res.status(200).send(purchases)
 })
 
 app.get('/product/search', (req: Request, res: Response) => {
@@ -86,4 +86,82 @@ app.post('/purchases', (req: Request, res: Response) => {
 
     purchases.push(newPurchase)
     res.status(201).send('Compra efetuada com sucesso 😎')
+})
+
+app.get('/products/:id', (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const result = products.find((product) => product.id === id)
+
+    res.status(200).send(result)
+    console.log('Objeto Product Encontrado')
+})
+
+app.get('/users/:id/purchases', (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const result = purchases.find((purchase) => purchase.userId === id)
+
+    res.status(200).send(result)
+    console.log('Array de compras do user procurado')
+})
+
+app.delete("/user/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const indexToRemove = users.findIndex((user) => user.id === id)
+
+    if(indexToRemove >= 0){
+        users.splice(indexToRemove, 1)
+    }
+
+    res.status(200).send("User apagado com sucesso")
+})
+
+app.delete("/product/:id", (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const indexToRemove = products.findIndex((product) => product.id === id)
+
+    if(indexToRemove >= 0){
+        products.splice(indexToRemove, 1)
+    }
+
+    res.status(200).send("Produto apagado com sucesso")
+})
+
+app.put('/user/:id', (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const newEmail = req.body.email as string | undefined
+    const newPassword = req.body.password as string | undefined
+
+    const user = users.find((user) => user.id === id)
+
+    if(user) {
+        user.email = newEmail || user.email
+        user.password = newPassword || user.password
+    }
+
+    res.status(200).send("Cadastro atualizado com sucesso")
+})
+
+app.put('/product/:id', (req: Request, res: Response) => {
+    const id = req.params.id
+
+    const newName = req.body.name as string | undefined
+    const newPrice = req.body.price as number | undefined
+    const newCategory = req.body.category as Department | undefined
+
+    const product = products.find((product) => product.id === id)
+
+    if(product) {
+        product.name = newName || product.name
+        product.price = newPrice || product.price
+        product.category = newCategory || product.category
+
+        product.price = isNaN(newPrice) ? product.price : newPrice
+    }
+
+    res.status(200).send("Produto atualizado com sucesso")
 })

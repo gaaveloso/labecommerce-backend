@@ -114,7 +114,7 @@ export const createPurchase = (userId: string, productId: string, quantity: numb
     totalPrice,
   }]
   purchases.push(...newPurchase)
-  console.log("Compra realizada com sucesso")
+  // console.log("Compra realizada com sucesso")
 }
 
 createPurchase('1', '10', 2, 300)
@@ -125,4 +125,4 @@ export const getAllPurchasesFromUserId = (userIdToSearch: string) : Array<TPurch
   }))
 }
 
-console.log(getAllPurchasesFromUserId('1'))
+// console.log(getAllPurchasesFromUserId('1'))
