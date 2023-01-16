@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllPurchasesFromUserId = exports.createPurchase = exports.purchases = exports.getProductsByName = exports.getProductById = exports.getAllProducts = exports.createProduct = exports.products = exports.getAllUsers = exports.createUser = exports.users = void 0;
+exports.getAllPurchasesFromUserId = exports.createPurchase = exports.getAllPurchases = exports.purchases = exports.getProductsByName = exports.getProductById = exports.getAllProducts = exports.createProduct = exports.products = exports.getAllUsers = exports.createUser = exports.users = void 0;
 const types_1 = require("./types");
 exports.users = [
     {
@@ -65,7 +65,7 @@ const getProductById = (idToSearch) => {
 exports.getProductById = getProductById;
 const getProductsByName = (q) => {
     return exports.products.filter((product) => {
-        return product.name.includes(q);
+        return product.name.toLowerCase().includes(q.toLowerCase());
     });
 };
 exports.getProductsByName = getProductsByName;
@@ -87,6 +87,10 @@ exports.purchases = [
         totalPrice: sumPrice(2, 120),
     },
 ];
+const getAllPurchases = () => {
+    return exports.purchases;
+};
+exports.getAllPurchases = getAllPurchases;
 const createPurchase = (userId, productId, quantity, totalPrice) => {
     const newPurchase = [{
             userId,
@@ -95,7 +99,6 @@ const createPurchase = (userId, productId, quantity, totalPrice) => {
             totalPrice,
         }];
     exports.purchases.push(...newPurchase);
-    console.log("Compra realizada com sucesso");
 };
 exports.createPurchase = createPurchase;
 (0, exports.createPurchase)('1', '10', 2, 300);
@@ -105,5 +108,4 @@ const getAllPurchasesFromUserId = (userIdToSearch) => {
     }));
 };
 exports.getAllPurchasesFromUserId = getAllPurchasesFromUserId;
-console.log((0, exports.getAllPurchasesFromUserId)('1'));
 //# sourceMappingURL=database.js.map
