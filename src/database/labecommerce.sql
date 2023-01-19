@@ -168,12 +168,6 @@ VALUES  ("p001", 200.00, 0, 'null', "1"),
         ("p003", 650.00, 0, 'null', "2"),
         ("p004", 80.00, 1, 'null', "2");
 
---Assim não deu certo, porque?
-
---Caso quisesse colocar datas diferentes pra cada usuario
-
--- VALUES ("p001", 200.00, 0, SELECT DATE('now'), "1"), ("p002", 400.00, 1, SELECT DATE('now'), "1"), ("p003", 650.00, 0, 'null', "2"), ("p004", 80.00, 1, 'null', "2");
-
 SELECT
     purchases.id as purchase_id,
     purchases.total_price,
@@ -188,4 +182,38 @@ FROM purchases
 SELECT *
 FROM purchases
     INNER JOIN users on users.id = purchases.buyer_id
-WHERE users.id = "2"
+WHERE users.id = "2";
+
+CREATE TABLE purchases_products (
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+SELECT * FROM purchases_products;
+
+INSERT INTO purchases_products (purchase_id, product_id, quantity)
+VALUES
+("p001", "50", 2),
+("p002", "40", 1),
+("p003", "30", 1);
+
+SELECT
+purchases.id,
+purchases.total_price,
+purchases.paid,
+purchases.delivered_at,
+purchases.buyer_id,
+purchases_products.product_id AS productId,
+purchases_products.quantity,
+products.name,
+products.price,
+products.category
+FROM purchases
+LEFT JOIN purchases_products
+ON purchases_products.purchase_id = purchases.id 
+INNER JOIN products
+on purchases_products.product_id = products.id
+;
