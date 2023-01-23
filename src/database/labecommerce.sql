@@ -3,24 +3,32 @@
 CREATE TABLE
     users(
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
+        name TEXT NOT NULL,
         email TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        createdAt TEXT NOT NULL
     );
 
 INSERT INTO
-    users(id, email, password)
+    users(id, name, email, password, createdAt)
 VALUES (
         "1",
+        "João",
         "veloso@labenu.com",
-        "labenu123"
+        "labenu123",
+        "23-01-2023"
     ), (
         "2",
+        "Pedro",
         "velosodev@labenu.com",
-        "123labenu"
+        "123labenu",
+        "23-01-2023"
     ), (
         "3",
+        "Maria",
         "velososql@labenu.com",
-        "labenu456"
+        "labenu456",
+        "23-01-2023"
     );
 
 --retorna todos os usuários cadastrados--
@@ -32,36 +40,42 @@ CREATE TABLE
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
         name TEXT NOT NULL,
         price REAL NOT NULL,
-        category TEXT NOT NULL
+        category TEXT NOT NULL,
+        imageUrl TEXT NULL
     );
 
 INSERT INTO
-    products(id, name, price, category)
+    products(id, name, price, category, imageUrl)
 VALUES (
         "10",
         "Memória RAM DDR4",
         150,
-        "Hardware"
+        "Hardware",
+        "https://images-americanas.b2w.io/produtos/210455695/imagens/memoria-ram-kingston-4gb-ddr4-pc4-2400-cl17-288/210455695_1_large.jpg"
     ), (
         "20",
         "Headset com fio USB",
         120,
-        "Periférico"
+        "Periférico",
+        "https://a-static.mlcdn.com.br/800x560/headset-usb-voip-dh-80-zox-com-cancelador-de-ruido/pontualoffice/7522783908/df381d339d9030252d0a1071d2fe85b4.jpg"
     ), (
         "30",
         "Placa mãe",
         500,
-        "Hardware"
+        "Hardware",
+        "https://img.terabyteshop.com.br/produto/g/placa-mae-asus-prime-h610m-e-d4-chipset-h610-intel-lga-1700-matx-ddr4-90mb19n0-m0eay0_136252.jpg"
     ), (
         "40",
         "SSD M.2",
         500,
-        "Hardware"
+        "Hardware",
+        "https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/oficinadosbits/media/uploads/produtos/foto/jvofipse/file.png"
     ), (
         "50",
         "WebCam",
         200,
-        "Periférico"
+        "Periférico",
+        "https://resource.logitech.com/content/dam/logitech/en/products/webcams/c922/gallery/c922-gallery-1.png"
     );
 
 --retorna todos os produtos cadastrados--
@@ -77,11 +91,13 @@ SELECT * FROM products WHERE name LIKE "%placa%";
 --insere o item mockado na tabela users
 
 INSERT INTO
-    users(id, email, password)
+    users(id, name, email, password, createdAt)
 VALUES (
         "4",
+        "Paula",
         "velosodatabase@labenu.com",
-        "labenu789"
+        "labenu789",
+        "23-01-2023"
     );
 
 --mocke um novo produto
@@ -89,12 +105,13 @@ VALUES (
 --insere o item mockado na tabela products
 
 INSERT INTO
-    products(id, name, price, category)
+    products(id, name, price, category, imageUrl)
 VALUES (
         "60",
         "Placa de Vídeo",
         1500,
-        "Hardware"
+        "Hardware",
+        "https://s2.glbimg.com/NaWdSD_-mHDjuaj1PbO2CXhXV8w=/0x0:695x521/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2017/Q/q/F5BBqCR4AtDbXjT2jtAQ/gigabyte-aorus-570.png"
     );
 
 --busca produto baseada no id mockado
