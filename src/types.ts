@@ -14,6 +14,7 @@ export type TProduct = {
     id: string
     name: string
     price: number
+    description: string
     category: Department
 }
 
@@ -22,4 +23,5 @@ export type TPurchase = {
     productId: string
     quantity: number
     totalPrice: number
+    buyer_id: string
 }

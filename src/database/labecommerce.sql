@@ -40,40 +40,46 @@ CREATE TABLE
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
         name TEXT NOT NULL,
         price REAL NOT NULL,
+        description TEXT NOT NULL,
         category TEXT NOT NULL,
         imageUrl TEXT NULL
     );
 
 INSERT INTO
-    products(id, name, price, category, imageUrl)
+    products(id, name, price, description, category, imageUrl)
 VALUES (
         "10",
         "Memória RAM DDR4",
         150,
+        "Chegue ao próximo nível em desempenho com o seu computador gamer com a Memória Gamer.",
         "Hardware",
         "https://images-americanas.b2w.io/produtos/210455695/imagens/memoria-ram-kingston-4gb-ddr4-pc4-2400-cl17-288/210455695_1_large.jpg"
     ), (
         "20",
         "Headset com fio USB",
         120,
+        "Experimente chamadas de voz, Skype, webinars e muito mais com clareza usando uma conexão USB plug-and-play simples com o headset",
         "Periférico",
         "https://a-static.mlcdn.com.br/800x560/headset-usb-voip-dh-80-zox-com-cancelador-de-ruido/pontualoffice/7522783908/df381d339d9030252d0a1071d2fe85b4.jpg"
     ), (
         "30",
         "Placa mãe",
         500,
+        "A série PLACA MÃE ajuda os usuários a trabalhar de forma mais inteligente, oferecendo uma experiência eficiente e produtiva.",
         "Hardware",
         "https://img.terabyteshop.com.br/produto/g/placa-mae-asus-prime-h610m-e-d4-chipset-h610-intel-lga-1700-matx-ddr4-90mb19n0-m0eay0_136252.jpg"
     ), (
         "40",
         "SSD M.2",
         500,
+        "O NV2 PCIe 4.0 NVMe SSD é uma solução substancial de armazenamento de última geração",
         "Hardware",
         "https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/oficinadosbits/media/uploads/produtos/foto/jvofipse/file.png"
     ), (
         "50",
         "WebCam",
         200,
+        "A WebCam oferece vídeo Full HD incrivelmente nítido e detalhado (1080p a 30 qps) com lente de vidro full HD, campo de visão de 78 °",
         "Periférico",
         "https://resource.logitech.com/content/dam/logitech/en/products/webcams/c922/gallery/c922-gallery-1.png"
     );
@@ -105,11 +111,12 @@ VALUES (
 --insere o item mockado na tabela products
 
 INSERT INTO
-    products(id, name, price, category, imageUrl)
+    products(id, name, price, description, category, imageUrl)
 VALUES (
         "60",
         "Placa de Vídeo",
         1500,
+        "A nova geração de placas gráficas está aqui.",
         "Hardware",
         "https://s2.glbimg.com/NaWdSD_-mHDjuaj1PbO2CXhXV8w=/0x0:695x521/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2017/Q/q/F5BBqCR4AtDbXjT2jtAQ/gigabyte-aorus-570.png"
     );
@@ -163,33 +170,35 @@ CREATE TABLE
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
         total_price REAL UNIQUE NOT NULL,
         paid INTEGER NOT NULL,
-        delivered_at TEXT NULL,
+        created_at TEXT DEFAULT (DATETIME()) NOT NULL,
         buyer_id TEXT NOT NULL,
         FOREIGN Key (buyer_id) REFERENCES users (id)
     );
 
-UPDATE purchases
-SET delivered_at = datetime()
-WHERE id = "p003";
+SELECT * FROM purchases;
+
+DELETE FROM purchases
+WHERE id=60;
 
 INSERT INTO
     purchases (
         id,
         total_price,
         paid,
-        delivered_at,
         buyer_id
     )
-VALUES  ("p001", 200.00, 0, 'null', "1"),
-        ("p002", 400.00, 1, 'null', "1"),
-        ("p003", 650.00, 0, 'null', "2"),
-        ("p004", 80.00, 1, 'null', "2");
+VALUES  ("p001", 400.00, 0, "1"),
+        ("p002", 500.00, 1, "1"),
+        ("p003", 500.00, 0, "2");
+
+DELETE FROM purchases
+WHERE id= 'p004';
 
 SELECT
     purchases.id as purchase_id,
     purchases.total_price,
     purchases.paid,
-    purchases.delivered_at,
+    purchases.created_at,
     purchases.buyer_id as user_id,
     users.email,
     users.password
